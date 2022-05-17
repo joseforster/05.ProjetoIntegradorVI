@@ -1,0 +1,30 @@
+Cadastro de produto
+	produto(id, descricao, valor_venda, quantidade_kg, estoque_minimo_kg,  ativo)
+	
+Cadastro de ordem de compra
+	fornecedor(id, nome, cnpj/cpf, fone, email, endereco, ativo)
+	compra(id, data, fornecedor_id, valor_total, recebido, cancelado)
+	produto ordem de compra(id, compra_id, produto_id, quantidade_kg, valor_kg, valor_total)
+	
+recebimento de produtos + conferimento da carga
+	bater conforme o id da ordem de compra
+	
+movimentacoes de estoque
+	deposito(id, nome, endereco, ativo)
+	area_deposito(id, deposito_id, limite_kg, atual_kg, disponivel, ativo)
+	
+documentação do espaço físico
+	fica com o deposito e area deposito
+	
+alertas de estoque mínimo e alimentos perto da validade
+	produto_detalhes(id, produto_id, area_id, quantidade_kg, validade)
+	
+vends para vareijistas e pessoas jurídicas
+	cliente(id, nome, cnpj, fone, email, endereco, ativo)
+	venda(id, cliente_id, data, valor_total, entregue, cancelado)
+	venda_produto(id, venda_id, produto_id, quantidade_kg, valor_kg, valor_total)
+	
+	alerta_validade(id, produto_detalhes_id, ativo)
+
+	alerta_estoque_minimo (id, produto_id, quantidade_kg, ativo)
+	
