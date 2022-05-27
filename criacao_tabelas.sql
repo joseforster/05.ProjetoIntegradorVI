@@ -12,7 +12,7 @@ create table if not exists projeto_integrador_vi.produto(
 create table if not exists projeto_integrador_vi.fornecedor(
     id serial primary key,
     nome varchar(100) not null,
-    cnpj_cpf varchar(14) not null,
+    cnpj varchar(14) not null,
     fone varchar(11) not null,
     email varchar(50),
     endereco varchar(200) not null,

@@ -11,18 +11,17 @@ import java.util.Date;
  *
  * @author forster
  */
-public class CompraModel {
+public class VendaModel {
     private int id;
     private Date dt;
-    private FornecedorModel fornecedor;
+    private ClienteModel cliente;
     private double valorTotal;
-    private ArrayList<CompraProdutoModel> compraProdutos;
+    private ArrayList<VendaProdutoModel> vendaProdutos;
 
-    public CompraModel(FornecedorModel fornecedor) 
-    {
-        this.fornecedor = fornecedor;
+    public VendaModel(ClienteModel cliente) {
+        this.cliente = cliente;
         this.dt = new Date();
-        this.compraProdutos = new ArrayList<CompraProdutoModel>();
+        this.vendaProdutos = new ArrayList<VendaProdutoModel>();
     }
 
     public int getId() {
@@ -41,12 +40,12 @@ public class CompraModel {
         this.dt = dt;
     }
 
-    public FornecedorModel getFornecedor() {
-        return fornecedor;
+    public ClienteModel getCliente() {
+        return cliente;
     }
 
-    public void setFornecedor(FornecedorModel fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setCliente(ClienteModel cliente) {
+        this.cliente = cliente;
     }
 
     public double getValorTotal() {
@@ -55,17 +54,17 @@ public class CompraModel {
 
     public void setValorTotal() {
         this.valorTotal = 0;
-        for(var produto : this.compraProdutos){
+        for(var produto : this.vendaProdutos){
             this.valorTotal += produto.getValorTotal();
-        }
+        };
     }
 
-    public ArrayList<CompraProdutoModel> getCompraProdutos() {
-        return compraProdutos;
+    public ArrayList<VendaProdutoModel> getVendaProdutos() {
+        return vendaProdutos;
     }
 
-    public void setCompraProdutos(ArrayList<CompraProdutoModel> compraProdutos) {
-        this.compraProdutos = compraProdutos;
+    public void setVendaProdutos(ArrayList<VendaProdutoModel> vendaProdutos) {
+        this.vendaProdutos = vendaProdutos;
     }
     
 }
