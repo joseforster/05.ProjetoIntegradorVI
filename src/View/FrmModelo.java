@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package View.Fornecedor;
+package View;
 
 /**
  *
@@ -56,23 +56,13 @@ public class FrmModelo extends javax.swing.JFrame {
 
         jLabel2.setText("jLabel2");
 
-        jTextField1.setText("jTextField1");
-
         jLabel3.setText("jLabel2");
-
-        jTextField2.setText("jTextField1");
 
         jLabel4.setText("jLabel2");
 
-        jTextField3.setText("jTextField1");
-
         jLabel5.setText("jLabel2");
 
-        jTextField4.setText("jTextField1");
-
         jLabel6.setText("jLabel2");
-
-        jTextField5.setText("jTextField1");
 
         jButton6.setText("Salvar");
 
@@ -131,16 +121,14 @@ public class FrmModelo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton6)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(1, 1, 1))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 
         jLabel7.setText("jLabel7");
-
-        jTextField6.setText("jTextField6");
 
         jButton3.setText("Pesquisar");
 
@@ -196,7 +184,7 @@ public class FrmModelo extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jButton4))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
         jTabbedPane1.addTab("Consulta", jPanel2);
@@ -217,6 +205,7 @@ public class FrmModelo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -225,10 +214,10 @@ public class FrmModelo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap())
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -237,6 +226,7 @@ public class FrmModelo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

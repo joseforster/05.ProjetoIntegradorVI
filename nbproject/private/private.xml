@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/Model/ProdutoModel.java</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/View/FrmMenuPrincipal.java</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/Model/CompraProdutoModel.java</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/Model/CompraModel.java</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/Model/ClienteModel.java</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/Model/FornecedorModel.java</file>
+            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/Util/IDAO.java</file>
+            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/View/FrmModelo.java</file>
+            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VI/ProjetoIntegradorVI/src/projetointegradorvi/ProjetoIntegradorVI.java</file>
         </group>
     </open-files>
 </project-private>

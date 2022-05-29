@@ -10,8 +10,8 @@ package Util;
  */
 public interface IDAO <T> {
     public boolean create (T objeto);
+    public String [][] read (String filtro);
     public boolean update (T objeto);
-    public boolean delete (T objeto);
-    public boolean getAll ();
-    public boolean getAllComboBox ();
+    public boolean delete (int id);
+    public String[] readComboBox ();
 }
