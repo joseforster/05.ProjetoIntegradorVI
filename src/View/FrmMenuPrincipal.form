@@ -95,6 +95,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#xc1;reas de Dep&#xf3;sito"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem12ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

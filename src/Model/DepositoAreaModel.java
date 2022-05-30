@@ -13,21 +13,19 @@ public class DepositoAreaModel {
     private String descricao;
     private DepositoModel deposito;
     private double limiteKg;
-    private double atualKg;
 
-    public DepositoAreaModel(int id, String descricao, DepositoModel deposito, double limiteKg, double atualKg) {
+    public DepositoAreaModel(int id, String descricao, DepositoModel deposito, double limiteKg) {
         this.id = id;
         this.descricao = descricao;
         this.deposito = deposito;
         this.limiteKg = limiteKg;
-        this.atualKg = atualKg;
+        
     }
 
-    public DepositoAreaModel(String descricao, DepositoModel deposito, double limiteKg, double atualKg) {
+    public DepositoAreaModel(String descricao, DepositoModel deposito, double limiteKg) {
         this.descricao = descricao;
         this.deposito = deposito;
         this.limiteKg = limiteKg;
-        this.atualKg = atualKg;
     }
 
     public int getId() {
@@ -62,14 +60,4 @@ public class DepositoAreaModel {
         this.limiteKg = limiteKg;
     }
 
-    public double getAtualKg() {
-        return atualKg;
-    }
-
-    public void setAtualKg(double atualKg) {
-        this.atualKg = atualKg;
-    }
-    
-    
-    
 }

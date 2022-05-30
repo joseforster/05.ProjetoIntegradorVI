@@ -51,8 +51,6 @@ create table if not exists projeto_integrador_vi.deposito_area(
     descricao varchar(100) not null,
     deposito_id int not null,
     limite_kg numeric,
-    atual_kg numeric not null default 0000.00,
-    disponivel char default 'S' check(ativo in ('S','N')),
     ativo char default 'S' check(ativo in ('S','N')),
     foreign key (deposito_id) references projeto_integrador_vi.deposito(id)
 );
