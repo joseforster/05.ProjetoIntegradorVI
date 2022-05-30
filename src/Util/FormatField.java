@@ -67,6 +67,7 @@ public class FormatField {
         }
     }
     
+    
     public static String removeFormat(String dado) {
         String retorno = "";
         for (int i = 0; i < dado.length(); i++) {
@@ -76,7 +77,12 @@ public class FormatField {
                     dado.charAt(i) != '-' &&
                     dado.charAt(i) != '(' &&
                     dado.charAt(i) != ')' &&
-                    dado.charAt(i) != ' ' 
+                    dado.charAt(i) != ' ' &&
+                    dado.charAt(i) != 'K' &&
+                    dado.charAt(i) != 'G' &&
+                    dado.charAt(i) != 'R' &&
+                    dado.charAt(i) != '$' 
+                    
             ) {
                 retorno = retorno + dado.charAt(i);
             }
