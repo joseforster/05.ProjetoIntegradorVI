@@ -4,6 +4,7 @@
  */
 package View;
 
+import View.Cliente.FrmCliente;
 import View.Deposito.FrmDeposito;
 import View.DepositoArea.FrmDepositoArea;
 import View.Fornecedor.FrmFornecedor;
@@ -129,6 +130,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Clientes");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
 
         jMenuBar1.add(jMenu3);
@@ -177,6 +183,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         janela.setTitle("Áreas de Depósito");
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        var janela = new FrmCliente();
+        
+        janela.setTitle("Clientes");
+        janela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments

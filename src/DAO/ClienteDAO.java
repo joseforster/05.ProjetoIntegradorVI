@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import Model.DepositoAreaModel;
+import Model.ClienteModel;
 import Util.ConexaoBD;
 import Util.IDAO;
 import java.sql.ResultSet;
@@ -14,10 +14,10 @@ import java.sql.Statement;
  *
  * @author forster
  */
-public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
+public class ClienteDAO implements IDAO<ClienteModel>{
 
     @Override
-    public boolean create(DepositoAreaModel objeto) {
+    public boolean create(ClienteModel objeto) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -29,13 +29,10 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
             String sqlCount;
             
             if(filtro.isBlank() || filtro.isEmpty()){
-                sqlCount = "select count(deposito_area.id) as qtde from  projeto_integrador_vi.deposito_area " +
-                            "inner join projeto_integrador_vi.deposito as d on d.id = deposito_area.deposito_id " +
-                            "where deposito_area.ativo = 'S'";
+                sqlCount = "select count(id) as qtde FROM projeto_integrador_vi.cliente where ativo = 'S';";
             }else{
-                sqlCount = "select count(deposito_area.id) as qtde from  projeto_integrador_vi.deposito_area " +
-                            "inner join projeto_integrador_vi.deposito as d on d.id = deposito_area.deposito_id " +
-                            "where deposito_area.ativo = 'S' and deposito_area.descricao ilike '%"+filtro+"%';";
+                sqlCount = "select count(id) as qtde FROM projeto_integrador_vi.cliente where ativo = 'S'"
+                        + " and nome ilike '%" + filtro + "%';";
             }
             
             
@@ -50,18 +47,15 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
             String sql;
             
             if(filtro.isBlank() || filtro.isEmpty()){
-                sql = "select deposito_area.id, deposito_area.descricao, limite_kg, d.descricao as deposito from  projeto_integrador_vi.deposito_area " +
-                        "inner join projeto_integrador_vi.deposito as d on d.id = deposito_area.deposito_id " +
-                        "where deposito_area.ativo = 'S'";
+                sql = "select * FROM projeto_integrador_vi.cliente where ativo = 'S' order by id;";
             }else{
-                sql = "select deposito_area.id, deposito_area.descricao, limite_kg, d.descricao as deposito from  projeto_integrador_vi.deposito_area " +
-                            "inner join projeto_integrador_vi.deposito as d on d.id = deposito_area.deposito_id " +
-                            "where deposito_area.ativo = 'S' and deposito_area.descricao ilike '%"+filtro+"%';";
+                sql = "select * FROM projeto_integrador_vi.cliente where ativo = 'S'"
+                        + " and nome ilike '%" + filtro + "%';";
             }
             
             ResultSet rsSelect = st.executeQuery(sql);
             
-            String[] colunas = new String[]{"Id","Descrição","Limite Kg", "Depósito"};
+            String[] colunas = new String[]{"Id","Nome","CNPJ", "Fone", "Email","Endereço"};
             
             String [][] data = new String[quantidadeRegistros][colunas.length];
             
@@ -69,14 +63,18 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
             
             while(rsSelect.next()){
                 int id = rsSelect.getInt("id");
-                String descricao = rsSelect.getString("descricao");
-                String limiteKg = rsSelect.getString("limite_kg");
-                String deposito = rsSelect.getString("deposito");
+                String nome = rsSelect.getString("nome");
+                String cnpj = rsSelect.getString("cnpj");
+                String fone = rsSelect.getString("fone");
+                String email = rsSelect.getString("email");
+                String endereco = rsSelect.getString("endereco");
           
                 data[i][0] = id+"";
-                data[i][1] = descricao;
-                data[i][2] = limiteKg;
-                data[i][3] = deposito;
+                data[i][1] = nome;
+                data[i][2] = cnpj;
+                data[i][3] = fone;
+                data[i][4] = email;
+                data[i][5] = endereco;
         
                 
                 i++;
@@ -92,7 +90,7 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
     }
 
     @Override
-    public boolean update(DepositoAreaModel objeto) {
+    public boolean update(ClienteModel objeto) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
