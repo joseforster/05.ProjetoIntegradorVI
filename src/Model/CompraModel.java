@@ -15,7 +15,6 @@ public class CompraModel {
     private int id;
     private Date dt;
     private FornecedorModel fornecedor;
-    private double valorTotal;
     private ArrayList<CompraProdutoModel> compraProdutos;
 
     public CompraModel(FornecedorModel fornecedor) 
@@ -47,17 +46,6 @@ public class CompraModel {
 
     public void setFornecedor(FornecedorModel fornecedor) {
         this.fornecedor = fornecedor;
-    }
-
-    public double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal() {
-        this.valorTotal = 0;
-        for(var produto : this.compraProdutos){
-            this.valorTotal += produto.getValorTotal();
-        }
     }
 
     public ArrayList<CompraProdutoModel> getCompraProdutos() {

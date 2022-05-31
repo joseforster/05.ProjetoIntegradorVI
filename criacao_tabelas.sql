@@ -22,7 +22,6 @@ create table if not exists projeto_integrador_vi.compra(
     id serial primary key,
     dt timestamp not null default current_timestamp,
     fornecedor_id int not null,
-    valor_total numeric,
     recebido char default 'N' check(recebido in ('S','N')),
     cancelado char default 'N' check(cancelado in ('S','N')),
     foreign key (fornecedor_id) references projeto_integrador_vi.fornecedor(id)
@@ -78,7 +77,6 @@ create table if not exists projeto_integrador_vi.venda(
     id serial primary key,
     dt timestamp not null default current_timestamp,
     cliente_id int not null,
-    valor_total numeric,
     entregue char default 'N' check(entregue in ('S','N')),
     cancelado char default 'N' check(cancelado in ('S','N')),
     foreign key (cliente_id) references projeto_integrador_vi.cliente(id)

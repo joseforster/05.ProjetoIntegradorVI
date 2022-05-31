@@ -15,7 +15,6 @@ public class VendaModel {
     private int id;
     private Date dt;
     private ClienteModel cliente;
-    private double valorTotal;
     private ArrayList<VendaProdutoModel> vendaProdutos;
 
     public VendaModel(ClienteModel cliente) {
@@ -46,17 +45,6 @@ public class VendaModel {
 
     public void setCliente(ClienteModel cliente) {
         this.cliente = cliente;
-    }
-
-    public double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal() {
-        this.valorTotal = 0;
-        for(var produto : this.vendaProdutos){
-            this.valorTotal += produto.getValorTotal();
-        };
     }
 
     public ArrayList<VendaProdutoModel> getVendaProdutos() {
