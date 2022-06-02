@@ -49,7 +49,7 @@ public class FrmCompra extends javax.swing.JFrame {
         private void populateTable(){
         
         String[][] data = new CompraDAO().read(null);
-        String[] colunas = new String[]{"Id","Data Pedido","Fornecedor", "Recebido"};
+        String[] colunas = new String[]{"Id","Data Pedido","Data Recebimento","Valor Total","Fornecedor", "Recebido"};
         
         DefaultTableModel tableModel = new DefaultTableModel(data, colunas);
         
@@ -179,20 +179,20 @@ public class FrmCompra extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Data Criação", "Fornecedor", "Recebido"
+                "Id", "Data Criação", "Data Recebimento", "Valor Total", "Fornecedor", "Recebido"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -225,7 +225,7 @@ public class FrmCompra extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Receber Pedido");
+        jButton3.setText("Ver Detalhes");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -382,9 +382,13 @@ public class FrmCompra extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
         
-        CompraDAO dao = new CompraDAO();
+        var janela = new FrmReceberCompra(id);
         
-        boolean sucesso = dao.receberCompra(id);
+        janela.setVisible(true);
+        
+        if(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString().toCharArray()[0] == 'S'){
+            janela.setConfirmarRecebimentoInvisible();
+        }
         
 
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -399,11 +403,9 @@ public class FrmCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1FocusGained
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        if(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString().toCharArray()[0] == 'S'){
-            jButton3.setEnabled(false);
+        if(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString().toCharArray()[0] == 'S'){
             jButton4.setEnabled(false);
         }else{
-            jButton3.setEnabled(true);
             jButton4.setEnabled(true);
         }
     }//GEN-LAST:event_jTable1MouseClicked

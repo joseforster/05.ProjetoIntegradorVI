@@ -20,7 +20,8 @@ create table if not exists projeto_integrador_vi.fornecedor(
 
 create table if not exists projeto_integrador_vi.compra(
     id serial primary key,
-    dt timestamp not null default current_timestamp,
+    dt_criacao date not null default current_date,
+    dt_recebimento date,
     fornecedor_id int not null,
     recebido char default 'N' check(recebido in ('S','N')),
     cancelado char default 'N' check(cancelado in ('S','N')),
@@ -75,9 +76,8 @@ create table if not exists projeto_integrador_vi.cliente(
 
 create table if not exists projeto_integrador_vi.venda(
     id serial primary key,
-    dt timestamp not null default current_timestamp,
+    dt_venda date not null default current_date,
     cliente_id int not null,
-    entregue char default 'N' check(entregue in ('S','N')),
     cancelado char default 'N' check(cancelado in ('S','N')),
     foreign key (cliente_id) references projeto_integrador_vi.cliente(id)
 );

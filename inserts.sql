@@ -6,7 +6,7 @@ insert into projeto_integrador_vi.fornecedor values (
     'jose@univates.com',
     'Santa Cruz do Sul, RS',
     default
-)
+);
 
 insert into projeto_integrador_vi.fornecedor values (
     default,
@@ -16,7 +16,7 @@ insert into projeto_integrador_vi.fornecedor values (
     'joao@univates.com',
     'Porto Alegre, RS',
     default
-)
+);
 
 insert into projeto_integrador_vi.produto values (
     default,
@@ -24,7 +24,7 @@ insert into projeto_integrador_vi.produto values (
     11.99,
     500,
     default
-)
+);
 
 insert into projeto_integrador_vi.produto values (
     default,
@@ -32,19 +32,19 @@ insert into projeto_integrador_vi.produto values (
     120.99,
     55,
     default
-)
+);
 
 insert into projeto_integrador_vi.deposito values (
     default,
     'Depósito de Santa Cruz',
     'Santa Cruz do Sul, RS'
-)
+);
 
 insert into projeto_integrador_vi.deposito values (
     default,
     'Depósito de Lajeado',
     'Lajeado, RS'
-)
+);
 
 insert into projeto_integrador_vi.deposito_area values(
     default,
@@ -52,7 +52,7 @@ insert into projeto_integrador_vi.deposito_area values(
     1,
     500,
     default
-)
+);
 
 insert into projeto_integrador_vi.cliente values (
     default,
@@ -62,7 +62,7 @@ insert into projeto_integrador_vi.cliente values (
     'mercadinho@univates.com',
     'Canoas, RS',
     default
-)
+);
 
 insert into projeto_integrador_vi.produto_detalhes values (
     default,
@@ -79,3 +79,16 @@ insert into projeto_integrador_vi.produto_detalhes values (
     56,
     '31/12/2023'
 );
+
+
+insert into projeto_integrador_vi.compra values
+(default, default,null, 2, 'N', 'N');
+
+insert into projeto_integrador_vi.compra values
+(default, default,current_date, 1, 'S', 'N');
+
+insert into projeto_integrador_vi.compra_produto values
+(default, 1,1, 10, 2.2, 22.00);
+
+insert into projeto_integrador_vi.compra_produto values
+(default, 2,2, 10, 3, 30.00);

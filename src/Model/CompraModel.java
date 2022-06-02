@@ -13,19 +13,20 @@ import java.util.Date;
  */
 public class CompraModel {
     private int id;
-    private Date dt;
+    private Date dtCriacao;
+    private Date dtRecebimento;
     private FornecedorModel fornecedor;
     private ArrayList<CompraProdutoModel> compraProdutos;
 
     public CompraModel(FornecedorModel fornecedor) 
     {
         this.fornecedor = fornecedor;
-        this.dt = new Date();
+        this.dtCriacao = new Date();
         this.compraProdutos = new ArrayList<CompraProdutoModel>();
     }
     
     public CompraModel(){
-        this.dt = new Date();
+        this.dtCriacao = new Date();
         this.compraProdutos = new ArrayList<CompraProdutoModel>();
     };
 
@@ -37,12 +38,12 @@ public class CompraModel {
         this.id = id;
     }
 
-    public Date getDt() {
-        return dt;
+    public Date getDtCriacao() {
+        return dtCriacao;
     }
 
-    public void setDt(Date dt) {
-        this.dt = dt;
+    public void setDtCriacao(Date dt) {
+        this.dtCriacao = dt;
     }
 
     public FornecedorModel getFornecedor() {
@@ -60,5 +61,15 @@ public class CompraModel {
     public void setCompraProdutos(ArrayList<CompraProdutoModel> compraProdutos) {
         this.compraProdutos = compraProdutos;
     }
+
+    public Date getDtRecebimento() {
+        return dtRecebimento;
+    }
+
+    public void setDtRecebimento(Date dt_recebimento) {
+        this.dtRecebimento = dt_recebimento;
+    }
+    
+    
     
 }
