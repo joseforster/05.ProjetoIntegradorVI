@@ -67,6 +67,19 @@ public class FormatField {
         }
     }
     
+    public static void FormatValor(JFormattedTextField field) {
+        try {
+            MaskFormatter m = new MaskFormatter();
+            m.setPlaceholderCharacter(' ');
+            m.setMask("R$ ###.##");
+            field.setFormatterFactory(null);
+            field.setFormatterFactory(new DefaultFormatterFactory(m));
+            field.setValue(null);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    
     
     public static String removeFormat(String dado) {
         String retorno = "";

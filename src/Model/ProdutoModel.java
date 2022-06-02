@@ -27,6 +27,13 @@ public class ProdutoModel {
         this.estoqueMinimo = estoqueMinimo;
     }
 
+    public ProdutoModel(int id, String descricao) {
+        this.id = id;
+        this.descricao = descricao;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

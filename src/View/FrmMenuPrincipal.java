@@ -5,6 +5,7 @@
 package View;
 
 import View.Cliente.FrmCliente;
+import View.Compra.FrmCompra;
 import View.Deposito.FrmDeposito;
 import View.DepositoArea.FrmDepositoArea;
 import View.Estoque.FrmConsultarEstoque;
@@ -40,7 +41,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -69,11 +69,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Compra");
 
-        jMenuItem1.setText("Realizar pedido de compra");
+        jMenuItem1.setText("Compra de produtos");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Conferir pedido de compra");
-        jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Fornecedores");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +206,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        var janela = new FrmCompra();
+        
+        janela.setTitle("Compra");
+        janela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,7 +261,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

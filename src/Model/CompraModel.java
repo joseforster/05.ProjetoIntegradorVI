@@ -23,6 +23,11 @@ public class CompraModel {
         this.dt = new Date();
         this.compraProdutos = new ArrayList<CompraProdutoModel>();
     }
+    
+    public CompraModel(){
+        this.dt = new Date();
+        this.compraProdutos = new ArrayList<CompraProdutoModel>();
+    };
 
     public int getId() {
         return id;
