@@ -11,6 +11,7 @@ import View.DepositoArea.FrmDepositoArea;
 import View.Estoque.FrmConsultarEstoque;
 import View.Fornecedor.FrmFornecedor;
 import View.Produto.FrmProduto;
+import View.Venda.FrmVenda;
 
 /**
  *
@@ -51,7 +52,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
 
         jMenu4.setText("File");
@@ -69,7 +69,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Compra");
 
-        jMenuItem1.setText("Compra de produtos");
+        jMenuItem1.setText("Operações de Compra");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -131,11 +131,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("Venda");
 
-        jMenuItem8.setText("Realizar pedido de venda");
+        jMenuItem8.setText("Operações de Venda");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
-
-        jMenuItem9.setText("Relatórios de venda");
-        jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Clientes");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +215,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        var janela = new FrmVenda();
+        
+        janela.setTitle("Venda");
+        janela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,6 +276,5 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

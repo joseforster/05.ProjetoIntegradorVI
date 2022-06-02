@@ -33,6 +33,13 @@ public class ClienteModel {
         this.endereço = endereço;
     }
 
+    public ClienteModel(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

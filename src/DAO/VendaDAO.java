@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import Model.CompraModel;
+import Model.VendaModel;
 import Util.ConexaoBD;
 import Util.IDAO;
 import java.sql.ResultSet;
@@ -14,10 +14,10 @@ import java.sql.Statement;
  *
  * @author forster
  */
-public class CompraDAO implements IDAO<CompraModel>{
+public class VendaDAO implements IDAO<VendaModel>{
 
     @Override
-    public boolean create(CompraModel objeto) {
+    public boolean create(VendaModel objeto) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -26,7 +26,7 @@ public class CompraDAO implements IDAO<CompraModel>{
         try{
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             
-            String sqlCount = "select count(id) as qtde from  projeto_integrador_vi.compra where cancelado = 'N'";
+            String sqlCount = "select count(id) as qtde from  projeto_integrador_vi.venda where cancelado = 'N'";
             
             ResultSet rsCount = st.executeQuery(sqlCount);
             
@@ -36,18 +36,18 @@ public class CompraDAO implements IDAO<CompraModel>{
                 quantidadeRegistros = rsCount.getInt("qtde");
             }
             
-            String sql = "select compra.id, to_char(dt_criacao, 'DD/MM/YYYY') as dt_criacao, to_char(dt_recebimento, 'DD/MM/YYYY') as dt_recebimento, " +
+            String sql = "select venda.id, to_char(dt_venda, 'DD/MM/YYYY') as dt_venda, " +
             "sum(valor_total) as valor_total, " +
-            "fornecedor.nome, recebido from  projeto_integrador_vi.compra " +
-            "inner join projeto_integrador_vi.fornecedor ON fornecedor.id = compra.fornecedor_id " +
-            "inner join projeto_integrador_vi.compra_produto ON compra_produto.compra_id = compra.id " +
+            "cliente.nome from  projeto_integrador_vi.venda " +
+            "inner join projeto_integrador_vi.cliente ON cliente.id = venda.cliente_id " +
+            "inner join projeto_integrador_vi.venda_produto ON venda_produto.venda_id = venda.id " +
             "where cancelado = 'N' " +
-            "group by 1,2,3,5,6";
+            "group by 1,2,4";
             
             
             ResultSet rsSelect = st.executeQuery(sql);
             
-            String[] colunas = new String[]{"Id","Data Pedido","Data Recebimento","Valor Total","Fornecedor", "Recebido"};
+            String[] colunas = new String[]{"Id","Data Venda","Valor Total","Cliente"};
             
             String [][] data = new String[quantidadeRegistros][colunas.length];
             
@@ -55,19 +55,16 @@ public class CompraDAO implements IDAO<CompraModel>{
             
             while(rsSelect.next()){
                 int id = rsSelect.getInt("id");
-                String dtPedido = rsSelect.getString("dt_criacao");
-                String dtRecebimento = rsSelect.getString("dt_recebimento");
+                String dtVenda = rsSelect.getString("dt_venda");
                 String valorTotal = rsSelect.getString("valor_total");
-                String fornecedor = rsSelect.getString("nome");
-                String recebido = rsSelect.getString("recebido");
+                String cliente = rsSelect.getString("nome");
+       
 
           
                 data[i][0] = id+"";
-                data[i][1] = dtPedido;
-                data[i][2] = dtRecebimento;
-                data[i][3] = valorTotal;
-                data[i][4] = fornecedor;
-                data[i][5] = recebido;
+                data[i][1] = dtVenda;
+                data[i][2] = valorTotal;
+                data[i][3] = cliente;
                 
                 i++;
                 
@@ -82,7 +79,7 @@ public class CompraDAO implements IDAO<CompraModel>{
     }
 
     @Override
-    public boolean update(CompraModel objeto) {
+    public boolean update(VendaModel objeto) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -96,13 +93,13 @@ public class CompraDAO implements IDAO<CompraModel>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public String[][] detalhesCompra(int idCompra){
+    public String[][] detalhesVenda(int idVenda){
         try{
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();
             
-            String sqlCount = "select count(compra_produto.id) as qtde from projeto_integrador_vi.compra_produto " +
+            String sqlCount = "select count(venda_produto.id) as qtde from projeto_integrador_vi.venda_produto " +
             "inner join projeto_integrador_vi.produto on produto_id = produto.id " +
-            "where compra_id = "+ idCompra;
+            "where venda_id = "+ idVenda;
             
             ResultSet rsCount = st.executeQuery(sqlCount);
             
@@ -112,9 +109,9 @@ public class CompraDAO implements IDAO<CompraModel>{
                 quantidadeRegistros = rsCount.getInt("qtde");
             }
             
-            String sql = "select produto.descricao, quantidade_kg, valor_kg, valor_total from projeto_integrador_vi.compra_produto " +
+            String sql = "select produto.descricao, quantidade_kg, valor_kg, valor_total from projeto_integrador_vi.venda_produto " +
             "inner join projeto_integrador_vi.produto on produto_id = produto.id " +
-            "where compra_id = "+ idCompra;
+            "where venda_id = "+ idVenda;
             
             
             ResultSet rsSelect = st.executeQuery(sql);
@@ -147,6 +144,6 @@ public class CompraDAO implements IDAO<CompraModel>{
             System.out.println("Erro ao buscar todos os registros: "+e);
             return new String[0][0];
         }
-    }
+    } 
     
 }

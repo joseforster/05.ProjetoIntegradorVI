@@ -84,8 +84,18 @@ public class FrmProduto extends javax.swing.JFrame {
         });
 
         fieldValorVenda.setText("R$ 000.00");
+        fieldValorVenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                fieldValorVendaFocusGained(evt);
+            }
+        });
 
         fieldEstoqueMinimo.setText("KG 0000.00");
+        fieldEstoqueMinimo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                fieldEstoqueMinimoFocusGained(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -355,6 +365,14 @@ public class FrmProduto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao inativar produto", "ERRO", 2);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void fieldValorVendaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldValorVendaFocusGained
+        fieldValorVenda.setText("");
+    }//GEN-LAST:event_fieldValorVendaFocusGained
+
+    private void fieldEstoqueMinimoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldEstoqueMinimoFocusGained
+        fieldEstoqueMinimo.setText("");
+    }//GEN-LAST:event_fieldEstoqueMinimoFocusGained
 
     /**
      * @param args the command line arguments

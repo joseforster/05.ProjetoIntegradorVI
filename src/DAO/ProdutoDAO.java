@@ -112,7 +112,7 @@ public class ProdutoDAO implements IDAO<ProdutoModel> {
                 quantidadeRegistros = rsCount.getInt("qtde");
             }
 
-            String sql = "select id||' - '||descricao as info from projeto_integrador_vi.produto where ativo = 'S' order by id;";
+            String sql = "select id||' - '||descricao||' - Valor Venda: R$ '||produto.valor_venda as info from projeto_integrador_vi.produto where ativo = 'S' order by id;";
 
             ResultSet rsSelect = st.executeQuery(sql);
 

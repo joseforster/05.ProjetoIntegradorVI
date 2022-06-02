@@ -22,6 +22,11 @@ public class VendaModel {
         this.dt = new Date();
         this.vendaProdutos = new ArrayList<VendaProdutoModel>();
     }
+    
+    public VendaModel(){
+        this.dt = new Date();
+        this.vendaProdutos = new ArrayList<VendaProdutoModel>();
+    }
 
     public int getId() {
         return id;

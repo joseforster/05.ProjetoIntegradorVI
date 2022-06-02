@@ -39,7 +39,7 @@ public class FrmConsultarEstoque extends javax.swing.JFrame {
     
     private void populateTableAreaDeposito(){
         String[][] data = new EstoqueDAO().readEstoqueByAreaDeposito(fieldFilterAreaDeposito.getText());
-        String[] colunas = new String[]{"Depósito","Área", "Atual Kg", "Limite Kg", "Utilizado"};
+        String[] colunas = new String[]{"Depósito","Área", "Atual Kg", "Limite Kg", "Utilizado(%)"};
         
         DefaultTableModel tableModel = new DefaultTableModel(data, colunas);
         
@@ -48,7 +48,7 @@ public class FrmConsultarEstoque extends javax.swing.JFrame {
     
     private void populateTableDescritivo(){
         String[][] data = new EstoqueDAO().readEstoqueDescritivo(fieldFilterDescritivo.getText());
-        String[] colunas = new String[]{"Produto","Área", "Depósito", "Quantidade Kg", "Validade"};
+        String[] colunas = new String[]{"Produto","Área", "Depósito", "Quantidade Kg", "Dt Validade"};
         
         DefaultTableModel tableModel = new DefaultTableModel(data, colunas);
         
