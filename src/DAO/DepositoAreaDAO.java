@@ -106,4 +106,49 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    public String [] readComboBoxByProduto(int idProduto){
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sqlCount = "select count(produto_detalhes.id) as qtde from projeto_integrador_vi.produto_detalhes " +
+            "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+            "where produto_id = "+idProduto;
+
+            ResultSet rsCount = st.executeQuery(sqlCount);
+
+            int quantidadeRegistros = 0;
+
+            while(rsCount.next()){
+                quantidadeRegistros = rsCount.getInt("qtde");
+            }
+
+            String sql = "select deposito_area.id||' - '||deposito_area.descricao||' - '||quantidade_kg||' Kg - Validade: '||to_char(validade, 'DD/MM/YYYY') as info from projeto_integrador_vi.produto_detalhes " +
+            "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+            "where produto_id = " + idProduto;
+
+            ResultSet rsSelect = st.executeQuery(sql);
+
+            String [] data = new String[quantidadeRegistros];
+
+            int i = 0;
+
+            while(rsSelect.next()){
+
+                String info = rsSelect.getString("info");
+
+                data[i] = info;
+
+                i++;
+
+            }
+
+            return data;
+
+        }catch(Exception e){
+            System.out.println("Erro ao buscar todos os registros para combo box: "+e);
+            return new String[0];
+        }
+    }
+    
+    
 }

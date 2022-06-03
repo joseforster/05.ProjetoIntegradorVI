@@ -92,3 +92,9 @@ insert into projeto_integrador_vi.compra_produto values
 
 insert into projeto_integrador_vi.compra_produto values
 (default, 2,2, 10, 3, 30.00);
+
+insert into projeto_integrador_vi.venda values
+(default, default,1, 'N');
+
+insert into projeto_integrador_vi.venda_produto values
+(default, 1,1, 10, 3, 30.00);

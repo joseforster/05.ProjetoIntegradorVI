@@ -9,6 +9,7 @@ import View.Compra.FrmCompra;
 import View.Deposito.FrmDeposito;
 import View.DepositoArea.FrmDepositoArea;
 import View.Estoque.FrmConsultarEstoque;
+import View.Estoque.FrmMovimentarEstoque;
 import View.Fornecedor.FrmFornecedor;
 import View.Produto.FrmProduto;
 import View.Venda.FrmVenda;
@@ -98,6 +99,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem5);
 
         jMenuItem7.setText("Movimentar estoque");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem7);
 
         jMenuItem4.setText("Alertas");
@@ -221,6 +227,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         janela.setTitle("Venda");
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        var janela = new FrmMovimentarEstoque();
+        
+        janela.setTitle("Movimentação de Estoque");
+        janela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
