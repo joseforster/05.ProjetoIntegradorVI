@@ -5,8 +5,10 @@
 package View.Estoque;
 
 import DAO.DepositoAreaDAO;
+import DAO.EstoqueDAO;
 import View.*;
 import DAO.ProdutoDAO;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -72,11 +74,19 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 fieldQuantidadeFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fieldQuantidadeFocusLost(evt);
+            }
         });
 
         jLabel9.setText("Área Destino");
 
         jButton2.setText("Salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Área Origem");
 
@@ -96,14 +106,13 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel10)
@@ -136,11 +145,11 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboBoxAreaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(82, 82, 82)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         pack();
@@ -174,15 +183,46 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
             fieldQuantidade.setModel(new SpinnerNumberModel(
                 1.00, 
                 1.00, 
-                Double.parseDouble(comboBoxAreaOrigem.getSelectedItem().toString().split("- ")[2].replace(" Kg", "")), 
+                Double.parseDouble(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[2].replace(" Kg", "")), 
                 1));
-                        
+            
+            double quantidade = Double.parseDouble(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[2].replace(" Kg", ""));
+                  
+            String[] areas = new DepositoAreaDAO().readComboBoxByQuantidadeDisponivel(quantidade);
+        
+            for(var area : areas){
+                comboBoxAreaDestino.addItem(area);
+            }
+            
             comboBoxAreaOrigem.setEnabled(false);
     }//GEN-LAST:event_comboBoxAreaOrigemFocusLost
 
     private void fieldQuantidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusGained
         
     }//GEN-LAST:event_fieldQuantidadeFocusGained
+
+    private void fieldQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusLost
+        
+    }//GEN-LAST:event_fieldQuantidadeFocusLost
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        int idProduto = Integer.parseInt(comboBoxProduto.getSelectedItem().toString().split(" - ")[0]);
+        
+        int idAreaOrigem = Integer.parseInt(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[0]);
+        
+        int idAreaDestino = Integer.parseInt(comboBoxAreaDestino.getSelectedItem().toString().split(" - ")[0]);
+        
+        double quantidade = Double.parseDouble(fieldQuantidade.getValue().toString());
+        
+        boolean sucesso = new EstoqueDAO().movimentarEstoque(idProduto, idAreaOrigem, idAreaDestino, quantidade);
+        
+        if(sucesso){
+            JOptionPane.showMessageDialog(null, "Sucesso ao realizar operação.", "SUCESSO", 1);
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao realizar operação.", "ERRO", 1);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

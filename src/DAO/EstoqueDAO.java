@@ -253,4 +253,8 @@ public class EstoqueDAO {
             return new String[0][0];
         }
     }
+    
+    public boolean movimentarEstoque(int idProduto, int idAreaOrigem, int idAreaDestino, double quantidade){
+        throw new UnsupportedOperationException("To Do");
+    }
 }

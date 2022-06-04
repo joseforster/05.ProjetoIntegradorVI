@@ -150,5 +150,59 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
         }
     }
     
+    public String[] readComboBoxByQuantidadeDisponivel(double quantidade){
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+
+            String sqlCount = "select count(deposito_area.id) as qtde from projeto_integrador_vi.deposito_area " +
+                            "inner join ( " +
+                            "    select deposito_area.id, limite_kg - sum(quantidade_kg) as disponivel from projeto_integrador_vi.produto_detalhes " +
+                            "    inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+                            "    group by deposito_area.id, limite_kg " +
+                            ") as tb on tb.id = deposito_area.id " +
+                            "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
+                            "where disponivel > " + quantidade;
+
+            ResultSet rsCount = st.executeQuery(sqlCount);
+
+            int quantidadeRegistros = 0;
+
+            while(rsCount.next()){
+                quantidadeRegistros = rsCount.getInt("qtde");
+            }
+
+            String sql = "select deposito_area.id||' - '||deposito_area.descricao||' - '||deposito.descricao||' - Disponível (Kg): '||tb.disponivel as info from projeto_integrador_vi.deposito_area " +
+                        "inner join ( " +
+                        "    select deposito_area.id, limite_kg - sum(quantidade_kg) as disponivel from projeto_integrador_vi.produto_detalhes " +
+                        "    inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+                        "    group by deposito_area.id, limite_kg " +
+                        ") as tb on tb.id = deposito_area.id " +
+                        "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
+                        "where disponivel > " + quantidade;
+
+            ResultSet rsSelect = st.executeQuery(sql);
+
+            String [] data = new String[quantidadeRegistros];
+
+            int i = 0;
+
+            while(rsSelect.next()){
+
+                String info = rsSelect.getString("info");
+
+                data[i] = info;
+
+                i++;
+
+            }
+
+            return data;
+
+        }catch(Exception e){
+            System.out.println("Erro ao buscar todos os registros para combo box: "+e);
+            return new String[0];
+        }
+    }
+    
     
 }
