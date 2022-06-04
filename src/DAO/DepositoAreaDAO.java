@@ -161,7 +161,7 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
                             "    group by deposito_area.id, limite_kg " +
                             ") as tb on tb.id = deposito_area.id " +
                             "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                            "where disponivel > " + quantidade;
+                            "where disponivel >= " + quantidade;
 
             ResultSet rsCount = st.executeQuery(sqlCount);
 
@@ -178,7 +178,7 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
                         "    group by deposito_area.id, limite_kg " +
                         ") as tb on tb.id = deposito_area.id " +
                         "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                        "where disponivel > " + quantidade;
+                        "where disponivel >= " + quantidade;
 
             ResultSet rsSelect = st.executeQuery(sql);
 

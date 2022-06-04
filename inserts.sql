@@ -54,6 +54,14 @@ insert into projeto_integrador_vi.deposito_area values(
     default
 );
 
+insert into projeto_integrador_vi.deposito_area values(
+    default,
+    'Área B',
+    1,
+    5,
+    default
+);
+
 insert into projeto_integrador_vi.cliente values (
     default,
     'Mercadinho do Moisés',
@@ -70,6 +78,14 @@ insert into projeto_integrador_vi.produto_detalhes values (
     1,
     32,
     '01/11/2023'
+);
+
+insert into projeto_integrador_vi.produto_detalhes values (
+    default,
+    1,
+    2,
+    17,
+    '01/11/2022'
 );
 
 insert into projeto_integrador_vi.produto_detalhes values (

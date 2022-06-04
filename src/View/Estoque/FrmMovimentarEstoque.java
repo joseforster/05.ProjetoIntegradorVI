@@ -81,6 +81,12 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
 
         jLabel9.setText("Área Destino");
 
+        comboBoxAreaDestino.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                comboBoxAreaDestinoFocusGained(evt);
+            }
+        });
+
         jButton2.setText("Salvar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +97,9 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
         jLabel10.setText("Área Origem");
 
         comboBoxAreaOrigem.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                comboBoxAreaOrigemFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 comboBoxAreaOrigemFocusLost(evt);
             }
@@ -186,19 +195,11 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
                 Double.parseDouble(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[2].replace(" Kg", "")), 
                 1));
             
-            double quantidade = Double.parseDouble(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[2].replace(" Kg", ""));
-                  
-            String[] areas = new DepositoAreaDAO().readComboBoxByQuantidadeDisponivel(quantidade);
-        
-            for(var area : areas){
-                comboBoxAreaDestino.addItem(area);
-            }
-            
             comboBoxAreaOrigem.setEnabled(false);
     }//GEN-LAST:event_comboBoxAreaOrigemFocusLost
 
     private void fieldQuantidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusGained
-        
+
     }//GEN-LAST:event_fieldQuantidadeFocusGained
 
     private void fieldQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusLost
@@ -223,6 +224,23 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao realizar operação.", "ERRO", 1);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void comboBoxAreaDestinoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxAreaDestinoFocusGained
+        comboBoxAreaDestino.removeAllItems();
+        
+        double quantidade = Double.parseDouble(fieldQuantidade.getValue().toString());
+                  
+            String[] areas = new DepositoAreaDAO().readComboBoxByQuantidadeDisponivel(quantidade);
+        
+            for(var area : areas){
+                comboBoxAreaDestino.addItem(area);
+            }
+            
+    }//GEN-LAST:event_comboBoxAreaDestinoFocusGained
+
+    private void comboBoxAreaOrigemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxAreaOrigemFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxAreaOrigemFocusGained
 
     /**
      * @param args the command line arguments
