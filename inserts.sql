@@ -98,3 +98,12 @@ insert into projeto_integrador_vi.venda values
 
 insert into projeto_integrador_vi.venda_produto values
 (default, 1,1, 10, 3, 30.00);
+
+
+insert into projeto_integrador_vi.produto_detalhes values (
+    default,
+    2,
+    1,
+    31,
+    '07/07/2022'
+);

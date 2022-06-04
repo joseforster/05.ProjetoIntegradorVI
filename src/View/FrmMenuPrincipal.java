@@ -4,6 +4,7 @@
  */
 package View;
 
+import View.Alerta.FrmAlerta;
 import View.Cliente.FrmCliente;
 import View.Compra.FrmCompra;
 import View.Deposito.FrmDeposito;
@@ -107,6 +108,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem7);
 
         jMenuItem4.setText("Alertas");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem11.setText("Produtos");
@@ -234,6 +240,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         janela.setTitle("Movimentação de Estoque");
         janela.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        var janela = new FrmAlerta();
+        
+        janela.setTitle("Alertas");
+        janela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
