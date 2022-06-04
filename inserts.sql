@@ -20,16 +20,16 @@ insert into projeto_integrador_vi.fornecedor values (
 
 insert into projeto_integrador_vi.produto values (
     default,
-    'Arroz 1KG',
-    11.99,
+    'Arroz',
+    11.50,
     500,
     default
 );
 
 insert into projeto_integrador_vi.produto values (
     default,
-    'Filé 5KG',
-    120.99,
+    'Filé',
+    48.50,
     55,
     default
 );

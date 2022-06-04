@@ -28,6 +28,13 @@ public class DepositoAreaModel {
         this.limiteKg = limiteKg;
     }
 
+    public DepositoAreaModel(int id, String descricao) {
+        this.id = id;
+        this.descricao = descricao;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

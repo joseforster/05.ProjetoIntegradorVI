@@ -5,10 +5,12 @@
 package View.Compra;
 
 import DAO.CompraDAO;
+import DAO.DepositoAreaDAO;
 import DAO.FornecedorDAO;
 import DAO.ProdutoDAO;
 import Model.CompraModel;
 import Model.CompraProdutoModel;
+import Model.DepositoAreaModel;
 import Model.FornecedorModel;
 import Model.ProdutoModel;
 import View.*;
@@ -77,6 +79,8 @@ public class FrmCompra extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         listProdutos = new javax.swing.JList<>();
         fieldValorKg = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
+        comboBoxAreas = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -107,6 +111,11 @@ public class FrmCompra extends javax.swing.JFrame {
         });
 
         fieldQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        fieldQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fieldQuantidadeFocusLost(evt);
+            }
+        });
 
         jLabel1.setText("Valor Kg");
 
@@ -126,6 +135,14 @@ public class FrmCompra extends javax.swing.JFrame {
 
         fieldValorKg.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, null, 1.0d));
 
+        jLabel3.setText("Área");
+
+        comboBoxAreas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                comboBoxAreasFocusGained(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,18 +156,22 @@ public class FrmCompra extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(comboBoxFornecedores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 237, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(98, 98, 98)
                         .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldValorKg, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(fieldValorKg, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)))
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxAreas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,7 +188,9 @@ public class FrmCompra extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(fieldValorKg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldValorKg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(comboBoxAreas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
@@ -330,11 +353,17 @@ public class FrmCompra extends javax.swing.JFrame {
         
         ProdutoModel produtoModel = new ProdutoModel(idProduto, descricaoProduto);
         
+        DepositoAreaModel depositoAreaModel = new DepositoAreaModel(
+                Integer.parseInt(comboBoxAreas.getSelectedItem().toString().split(" - ")[0]),
+                comboBoxAreas.getSelectedItem().toString().split(" - ")[1]
+        );
+        
         CompraProdutoModel compraProdutoModel = new CompraProdutoModel(
                 compraModel, 
                 produtoModel, 
                 Double.parseDouble(fieldQuantidade.getValue().toString()), 
-                Double.parseDouble(fieldValorKg.getValue().toString())
+                Double.parseDouble(fieldValorKg.getValue().toString()),
+                depositoAreaModel
         );
         
         this.compraModel.getCompraProdutos().add(compraProdutoModel);
@@ -410,6 +439,20 @@ public class FrmCompra extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void fieldQuantidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusLost
+
+    }//GEN-LAST:event_fieldQuantidadeFocusLost
+
+    private void comboBoxAreasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxAreasFocusGained
+        comboBoxAreas.removeAllItems();
+        
+        double quantidade = Double.parseDouble(fieldQuantidade.getValue().toString());
+        
+        for(var area : new DepositoAreaDAO().readComboBoxByQuantidadeDisponivel(quantidade)){
+            comboBoxAreas.addItem(area);
+        }
+    }//GEN-LAST:event_comboBoxAreasFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -449,6 +492,7 @@ public class FrmCompra extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboBoxAreas;
     private javax.swing.JComboBox<String> comboBoxFornecedores;
     private javax.swing.JSpinner fieldQuantidade;
     private javax.swing.JSpinner fieldValorKg;
@@ -459,6 +503,7 @@ public class FrmCompra extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

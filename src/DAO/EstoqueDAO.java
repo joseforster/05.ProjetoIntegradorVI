@@ -90,15 +90,13 @@ public class EstoqueDAO {
                 sqlCount = "select count(distinct deposito_area.id) as qtde " +
                             "from projeto_integrador_vi.produto_detalhes " +
                             "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
-                            "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                            "group by deposito.descricao,deposito_area.descricao, limite_kg";
+                            "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id ";
             }else{
                 sqlCount = "select count(distinct deposito_area.id) as qtde " +
                             "from projeto_integrador_vi.produto_detalhes " +
                             "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
                             "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                            "where deposito_area.descricao ilike '%"+filtro+"%' " +
-                            "group by deposito.descricao,deposito_area.descricao, limite_kg";
+                            "where deposito_area.descricao ilike '%"+filtro+"%' ";
             }
             
             
@@ -114,14 +112,14 @@ public class EstoqueDAO {
             
             if(filtro.isBlank() || filtro.isEmpty()){
                 sql = "select deposito.descricao as deposito,  deposito_area.descricao as area, sum(quantidade_kg) as atual, limite_kg, " +
-                        "cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(3,1)) as utilizado " +
+                        "cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(4,1)) as utilizado " +
                         "from projeto_integrador_vi.produto_detalhes " +
                         "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
                         "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
                         "group by deposito.descricao,deposito_area.descricao, limite_kg order by 4 desc";
             }else{
                 sql = "select deposito.descricao as deposito,  deposito_area.descricao as area, sum(quantidade_kg) as atual, limite_kg, " +
-                        "cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(3,1)) as utilizado " +
+                        "cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(4,1)) as utilizado " +
                         "from projeto_integrador_vi.produto_detalhes " +
                         "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
                         "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
@@ -160,7 +158,7 @@ public class EstoqueDAO {
             return data;
             
         }catch(Exception e){
-            System.out.println("Erro ao buscar todos os registros: "+e);
+            System.out.println("Erro ao buscar todos os registros (áreas por depósito): "+e);
             return new String[0][0];
         }
     }

@@ -14,13 +14,15 @@ public class CompraProdutoModel {
     private double quantidade;
     private double valorUnitario;
     private double valorTotal;
+    private DepositoAreaModel depositoArea;
 
-    public CompraProdutoModel(CompraModel compra, ProdutoModel produto, double quantidade, double valorUnitario) {
+    public CompraProdutoModel(CompraModel compra, ProdutoModel produto, double quantidade, double valorUnitario, DepositoAreaModel depositoArea) {
         this.compra = compra;
         this.produto = produto;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorUnitario * quantidade;
+        this.depositoArea = depositoArea;
     }
 
     public CompraModel getCompra() {
@@ -62,8 +64,14 @@ public class CompraProdutoModel {
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
-    
-    
+
+    public DepositoAreaModel getDepositoArea() {
+        return depositoArea;
+    }
+
+    public void setDepositoArea(DepositoAreaModel depositoArea) {
+        this.depositoArea = depositoArea;
+    }
     
     
 }
