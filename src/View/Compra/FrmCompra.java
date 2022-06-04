@@ -124,7 +124,7 @@ public class FrmCompra extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listProdutos);
 
-        fieldValorKg.setModel(new javax.swing.SpinnerNumberModel(0.1d, 0.1d, null, 1.0d));
+        fieldValorKg.setModel(new javax.swing.SpinnerNumberModel(1.0d, 1.0d, null, 1.0d));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

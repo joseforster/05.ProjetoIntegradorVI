@@ -206,7 +206,7 @@
             <Component class="javax.swing.JSpinner" name="fieldValorKg">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="0.1" minimum="0.1" numberType="java.lang.Double" stepSize="1.0" type="number"/>
+                  <SpinnerModel initial="1.0" minimum="1.0" numberType="java.lang.Double" stepSize="1.0" type="number"/>
                 </Property>
               </Properties>
             </Component>
