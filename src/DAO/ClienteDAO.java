@@ -18,7 +18,28 @@ public class ClienteDAO implements IDAO<ClienteModel>{
 
     @Override
     public boolean create(ClienteModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "insert into projeto_integrador_vi.cliente values (default, "
+                    + "'"+objeto.getNome()+"', "
+                    + "'"+objeto.getCnpj()+"', "
+                    + "'"+objeto.getTelefone()+"', "
+                    + "'"+objeto.getEmail()+"', "
+                    + "'"+objeto.getEndereco()+"', default);";
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+            
+        }
+        catch(Exception e){
+            System.out.println("Erro ao inserir cliente: "+e);
+            return false;
+        }
     }
 
     @Override
@@ -91,12 +112,49 @@ public class ClienteDAO implements IDAO<ClienteModel>{
 
     @Override
     public boolean update(ClienteModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.cliente set "
+                    + "nome = '" + objeto.getNome()+"'"
+                    + ", cnpj = '" + objeto.getCnpj()+"'"
+                    + ", fone = '" + objeto.getTelefone()+"'"
+                    + ", email = '" + objeto.getEmail()+"'"
+                    + ", endereco = '" + objeto.getEndereco()+"'"
+                    + " where id = " + objeto.getId();
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Erro ao editar cliente:"+e);
+            
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.cliente set ativo = 'N' where id = "+id;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao inativar registro: " + e);
+            
+            return false;
+        }
     }
 
     @Override

@@ -305,8 +305,8 @@ public class FrmCliente extends javax.swing.JFrame {
         if(fieldAreValid){
             ClienteModel model = new ClienteModel(
                     fieldNome.getText(), 
-                    Integer.parseInt(FormatField.removeFormat(fieldCnpj.getText())), 
-                    Integer.parseInt(FormatField.removeFormat(fieldFone.getText())), 
+                    FormatField.removeFormat(fieldCnpj.getText()), 
+                    FormatField.removeFormat(fieldFone.getText()), 
                     fieldEmail.getText(), 
                     fieldEndereco.getText());
             
@@ -318,6 +318,8 @@ public class FrmCliente extends javax.swing.JFrame {
                 
                 if(sucesso){
                     JOptionPane.showMessageDialog(null, "Sucesso ao criar cliente", "SUCESSO", 1);
+                    
+                    populateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Erro ao criar cliente", "ERRO", 2);
                 }
@@ -374,7 +376,11 @@ public class FrmCliente extends javax.swing.JFrame {
         boolean sucesso = dao.delete(id);
         
         if(sucesso){
+            
             JOptionPane.showMessageDialog(null, "Sucesso ao inativar cliente", "SUCESSO", 2);
+            
+            populateTable();
+            
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inativar cliente", "ERRO", 2);
         }

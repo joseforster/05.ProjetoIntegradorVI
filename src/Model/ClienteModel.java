@@ -11,26 +11,26 @@ package Model;
 public class ClienteModel {
     private int id;
     private String nome;
-    private int cnpj;
-    private int fone;
+    private String cnpj;
+    private String fone;
     private String email;
-    private String endereço;
+    private String endereco;
 
-    public ClienteModel(int id, String nome, int cnpj, int telefone, String email, String endereço) {
+    public ClienteModel(int id, String nome, String cnpj, String telefone, String email, String endereço) {
         this.id = id;
         this.nome = nome;
         this.cnpj = cnpj;
         this.fone = telefone;
         this.email = email;
-        this.endereço = endereço;
+        this.endereco = endereço;
     }
 
-    public ClienteModel(String nome, int cnpj, int telefone, String email, String endereço) {
+    public ClienteModel(String nome, String cnpj, String telefone, String email, String endereço) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.fone = telefone;
         this.email = email;
-        this.endereço = endereço;
+        this.endereco = endereço;
     }
 
     public ClienteModel(int id, String nome) {
@@ -56,19 +56,19 @@ public class ClienteModel {
         this.nome = nome;
     }
 
-    public int getCnpj() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(int cnpj) {
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return fone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.fone = telefone;
     }
 
@@ -80,12 +80,12 @@ public class ClienteModel {
         this.email = email;
     }
 
-    public String getEndereço() {
-        return endereço;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setEndereço(String endereço) {
-        this.endereço = endereço;
+    public void setEndereco(String endereço) {
+        this.endereco = endereço;
     }
     
     
