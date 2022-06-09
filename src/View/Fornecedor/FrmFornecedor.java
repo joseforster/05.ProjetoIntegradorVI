@@ -305,8 +305,8 @@ public class FrmFornecedor extends javax.swing.JFrame {
         if(fieldAreValid){
             FornecedorModel fornecedorModel = new FornecedorModel(
                     fieldNome.getText(), 
-                    Integer.parseInt(FormatField.removeFormat(fieldCnpj.getText())), 
-                    Integer.parseInt(FormatField.removeFormat(fieldFone.getText())), 
+                    FormatField.removeFormat(fieldCnpj.getText()), 
+                    FormatField.removeFormat(fieldFone.getText()), 
                     fieldEmail.getText(), 
                     fieldEndereco.getText());
             
@@ -318,6 +318,7 @@ public class FrmFornecedor extends javax.swing.JFrame {
                 
                 if(sucesso){
                     JOptionPane.showMessageDialog(null, "Sucesso ao criar fornecedor", "SUCESSO", 1);
+                    populateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Erro ao criar fornecedor", "ERRO", 2);
                 }
@@ -375,6 +376,7 @@ public class FrmFornecedor extends javax.swing.JFrame {
         
         if(sucesso){
             JOptionPane.showMessageDialog(null, "Sucesso ao inativar fornecedor", "SUCESSO", 2);
+            populateTable();
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inativar fornecedor", "ERRO", 2);
         }

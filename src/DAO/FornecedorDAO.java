@@ -18,7 +18,28 @@ public class FornecedorDAO implements IDAO<FornecedorModel>{
 
     @Override
     public boolean create(FornecedorModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "insert into projeto_integrador_vi.fornecedor values (default, "
+                    + "'"+objeto.getNome()+"', "
+                    + "'"+objeto.getCnpj()+"', "
+                    + "'"+objeto.getFone()+"', "
+                    + "'"+objeto.getEmail()+"', "
+                    + "'"+objeto.getEndereco()+"', default);";
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+            
+        }
+        catch(Exception e){
+            System.out.println("Erro ao inserir fornecedor: "+e);
+            return false;
+        }
     }
 
     @Override
@@ -91,12 +112,50 @@ public class FornecedorDAO implements IDAO<FornecedorModel>{
 
     @Override
     public boolean update(FornecedorModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.fornecedor set "
+                    + "nome = '" + objeto.getNome()+"'"
+                    + ", cnpj = '" + objeto.getCnpj()+"'"
+                    + ", fone = '" + objeto.getFone()+"'"
+                    + ", email = '" + objeto.getEmail()+"'"
+                    + ", endereco = '" + objeto.getEndereco()+"'"
+                    + " where id = " + objeto.getId();
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Erro ao editar fornecedor:"+e);
+            
+            return false;
+        }
+        
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.fornecedor set ativo = 'N' where id = "+id;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao inativar registro: " + e);
+            
+            return false;
+        }
     }
 
     @Override

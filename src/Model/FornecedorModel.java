@@ -11,12 +11,12 @@ package Model;
 public class FornecedorModel {
     private int id;
     private String nome;
-    private int cnpj;
-    private int fone;
+    private String cnpj;
+    private String fone;
     private String email;
     private String endereco;
 
-    public FornecedorModel(String nome, int cnpj, int fone, String email, String endereco) {
+    public FornecedorModel(String nome, String cnpj, String fone, String email, String endereco) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.fone = fone;
@@ -24,10 +24,10 @@ public class FornecedorModel {
         this.endereco = endereco;
     }
 
-    public FornecedorModel(int id, String nome, int documento, int fone, String email, String endereco) {
+    public FornecedorModel(int id, String nome, String cnpj, String fone, String email, String endereco) {
         this.id = id;
         this.nome = nome;
-        this.cnpj = documento;
+        this.cnpj = cnpj;
         this.fone = fone;
         this.email = email;
         this.endereco = endereco;
@@ -56,19 +56,19 @@ public class FornecedorModel {
         this.nome = nome;
     }
 
-    public int getDocumento() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setDocumento(int documento) {
-        this.cnpj = documento;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public int getFone() {
+    public String getFone() {
         return fone;
     }
 
-    public void setFone(int fone) {
+    public void setFone(String fone) {
         this.fone = fone;
     }
 

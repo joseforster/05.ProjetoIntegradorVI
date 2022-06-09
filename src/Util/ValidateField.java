@@ -60,7 +60,7 @@ public class ValidateField {
     }
     
     public static boolean validarEmail(String email){
-        if(email.contains("@") && email.contains(".com")){
+        if(email.contains("@") && email.contains(".br")){
             return true;
         }
         return false;
