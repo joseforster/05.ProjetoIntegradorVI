@@ -298,7 +298,7 @@ public class FrmProduto extends javax.swing.JFrame {
         if(fieldAreValid){
             ProdutoModel produtoModel = new ProdutoModel(
                 fieldDescricao.getText(),
-                Double.parseDouble(FormatField.removeFormat(fieldValorVenda.getText())),
+                Double.parseDouble(fieldValorVenda.getText()),
                 Double.parseDouble(FormatField.removeFormat(fieldEstoqueMinimo.getText()))
             );
             
@@ -310,6 +310,8 @@ public class FrmProduto extends javax.swing.JFrame {
                 
                 if(sucesso){
                     JOptionPane.showMessageDialog(null, "Sucesso ao criar produto", "SUCESSO", 1);
+                    
+                    populateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Erro ao criar produto", "ERRO", 2);
                 }
@@ -361,6 +363,8 @@ public class FrmProduto extends javax.swing.JFrame {
         
         if(sucesso){
             JOptionPane.showMessageDialog(null, "Sucesso ao inativar produto", "SUCESSO", 2);
+            
+            populateTable();
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inativar produto", "ERRO", 2);
         }

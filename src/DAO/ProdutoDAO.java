@@ -18,7 +18,26 @@ public class ProdutoDAO implements IDAO<ProdutoModel> {
 
     @Override
     public boolean create(ProdutoModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "insert into projeto_integrador_vi.produto values (default, "
+                    + "'"+objeto.getDescricao()+"', "
+                    +objeto.getValorVenda()+" , "
+                    +objeto.getEstoqueMinimo()+", default);";
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+            
+        }
+        catch(Exception e){
+            System.out.println("Erro ao inserir registro: "+e);
+            return false;
+        }    
     }
 
     @Override
@@ -89,12 +108,47 @@ public class ProdutoDAO implements IDAO<ProdutoModel> {
 
     @Override
     public boolean update(ProdutoModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.produto set "
+                    + "descricao = '" + objeto.getDescricao()+"'"
+                    + ", valor_venda = " + objeto.getValorVenda()
+                    + ", estoque_minimo_kg = " + objeto.getEstoqueMinimo()
+                    + " where id = " + objeto.getId();
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Erro ao editar produto:"+e);
+            
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.produto set ativo = 'N' where id = "+id;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao inativar produto: " + e);
+            
+            return false;
+        }
     }
 
     @Override
