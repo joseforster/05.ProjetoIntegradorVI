@@ -4,6 +4,9 @@
  */
 package Util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatterFactory;
@@ -103,4 +106,18 @@ public class FormatField {
         return (retorno);
         }
     
+    public static Date returnDate(String data){
+            Date dtValidade;
+            
+            try {
+                dtValidade = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+                
+                return dtValidade;
+                
+            } catch (ParseException ex) {
+                System.out.println("Erro ao converter: " + ex);
+                
+                return new Date();
+            }
+    }
 }

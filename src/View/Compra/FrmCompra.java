@@ -17,6 +17,11 @@ import View.*;
 import java.awt.Color;
 import Util.FormatField;
 import Util.ValidateField;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -81,6 +86,8 @@ public class FrmCompra extends javax.swing.JFrame {
         fieldValorKg = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         comboBoxAreas = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        fieldValidade = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -95,7 +102,7 @@ public class FrmCompra extends javax.swing.JFrame {
 
         jLabel2.setText("Fornecedores");
 
-        jLabel6.setText("Quantidade");
+        jLabel6.setText("Qtde");
 
         jButton6.setText("Finalizar Pedido");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +150,14 @@ public class FrmCompra extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Validade");
+
+        try {
+            fieldValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,22 +171,26 @@ public class FrmCompra extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(comboBoxFornecedores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 237, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldValorKg, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fieldValorKg, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldValidade, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(comboBoxAreas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(comboBoxAreas, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,7 +209,9 @@ public class FrmCompra extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(fieldValorKg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(comboBoxAreas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxAreas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(fieldValidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
@@ -262,7 +283,7 @@ public class FrmCompra extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,8 +355,17 @@ public class FrmCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_listProdutosFocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        boolean fieldsAreValid = true;
         
-        if(compraModel.getFornecedor() == null){
+        if(!ValidateField.validarData(fieldValidade.getText())){
+            fieldsAreValid = false;
+            JOptionPane.showMessageDialog(null, "Data inválida.", "ERRO", 2);
+        }
+        
+        
+        if(fieldsAreValid){
+            
+            if(compraModel.getFornecedor() == null){
             int idFornecedor = Integer.parseInt(
                     comboBoxFornecedores.getSelectedItem().toString().split(" - ")[0]
             );
@@ -346,37 +376,45 @@ public class FrmCompra extends javax.swing.JFrame {
             
             compraModel.setFornecedor(fornecedorModel);
             
+            }
+
+            int idProduto = Integer.parseInt(listProdutos.getSelectedValue().split(" - ")[0]);
+            String descricaoProduto = listProdutos.getSelectedValue().split(" - ")[1];
+
+            ProdutoModel produtoModel = new ProdutoModel(idProduto, descricaoProduto);
+
+            DepositoAreaModel depositoAreaModel = new DepositoAreaModel(
+                    Integer.parseInt(comboBoxAreas.getSelectedItem().toString().split(" - ")[0]),
+                    comboBoxAreas.getSelectedItem().toString().split(" - ")[1]
+            );
+            
+            
+            Date dtValidade = FormatField.returnDate(fieldValidade.getText());
+
+
+            CompraProdutoModel compraProdutoModel = new CompraProdutoModel(
+                    compraModel, 
+                    produtoModel, 
+                    Double.parseDouble(fieldQuantidade.getValue().toString()), 
+                    Double.parseDouble(fieldValorKg.getValue().toString()),
+                    depositoAreaModel,
+                    dtValidade
+            );
+
+            this.compraModel.getCompraProdutos().add(compraProdutoModel);
+
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Item adicionado.\nValor Total: R$ "+compraProdutoModel.getValorTotal(), 
+                    "SUCESSO", 
+                    1);
+
+            if(!jButton6.isEnabled()){
+                jButton6.setEnabled(true);
+            }
         }
         
-        int idProduto = Integer.parseInt(listProdutos.getSelectedValue().split(" - ")[0]);
-        String descricaoProduto = listProdutos.getSelectedValue().split(" - ")[1];
         
-        ProdutoModel produtoModel = new ProdutoModel(idProduto, descricaoProduto);
-        
-        DepositoAreaModel depositoAreaModel = new DepositoAreaModel(
-                Integer.parseInt(comboBoxAreas.getSelectedItem().toString().split(" - ")[0]),
-                comboBoxAreas.getSelectedItem().toString().split(" - ")[1]
-        );
-        
-        CompraProdutoModel compraProdutoModel = new CompraProdutoModel(
-                compraModel, 
-                produtoModel, 
-                Double.parseDouble(fieldQuantidade.getValue().toString()), 
-                Double.parseDouble(fieldValorKg.getValue().toString()),
-                depositoAreaModel
-        );
-        
-        this.compraModel.getCompraProdutos().add(compraProdutoModel);
-        
-        JOptionPane.showMessageDialog(
-                null, 
-                "Item adicionado.\nValor Total: R$ "+compraProdutoModel.getValorTotal(), 
-                "SUCESSO", 
-                1);
-        
-        if(!jButton6.isEnabled()){
-            jButton6.setEnabled(true);
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -387,6 +425,8 @@ public class FrmCompra extends javax.swing.JFrame {
         
         if(resultado){
             JOptionPane.showMessageDialog(null, "Sucesso ao realizar compra.", "SUCESSO", 2);
+            
+            populateTable();
             this.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao realizar compra.", "ERRO", 2);
@@ -495,6 +535,7 @@ public class FrmCompra extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxAreas;
     private javax.swing.JComboBox<String> comboBoxFornecedores;
     private javax.swing.JSpinner fieldQuantidade;
+    private javax.swing.JFormattedTextField fieldValidade;
     private javax.swing.JSpinner fieldValorKg;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -504,6 +545,7 @@ public class FrmCompra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

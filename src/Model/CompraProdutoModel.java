@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author forster
@@ -11,18 +13,20 @@ package Model;
 public class CompraProdutoModel {
     private CompraModel compra;
     private ProdutoModel produto;
+    private Date validade;
     private double quantidade;
     private double valorUnitario;
     private double valorTotal;
     private DepositoAreaModel depositoArea;
 
-    public CompraProdutoModel(CompraModel compra, ProdutoModel produto, double quantidade, double valorUnitario, DepositoAreaModel depositoArea) {
+    public CompraProdutoModel(CompraModel compra, ProdutoModel produto, double quantidade, double valorUnitario, DepositoAreaModel depositoArea, Date validade) {
         this.compra = compra;
         this.produto = produto;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorUnitario * quantidade;
         this.depositoArea = depositoArea;
+        this.validade = validade;
     }
 
     public CompraModel getCompra() {
@@ -72,6 +76,16 @@ public class CompraProdutoModel {
     public void setDepositoArea(DepositoAreaModel depositoArea) {
         this.depositoArea = depositoArea;
     }
+
+    public Date getValidade() {
+        return validade;
+    }
+
+    public void setValidade(Date validade) {
+        this.validade = validade;
+    }
+    
+    
     
     
 }

@@ -6,6 +6,7 @@ package View.Compra;
 
 import DAO.CompraDAO;
 import View.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -120,6 +121,11 @@ public class FrmReceberCompra extends javax.swing.JFrame {
         });
 
         jButton4.setText("Confirmar Recebimento");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,6 +162,21 @@ public class FrmReceberCompra extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        boolean sucesso = new CompraDAO().finalizarCompra(idCompra);
+        
+        if(sucesso){
+            JOptionPane.showMessageDialog(null, "Sucesso ao receber pedido.", "SUCESSO", 1);
+            
+            this.dispose();
+            
+            populateTable();
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao receber pedido.", "ERRO", 1);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

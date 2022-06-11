@@ -4,6 +4,9 @@
  */
 package Util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFormattedTextField;
 
 /**
@@ -64,6 +67,31 @@ public class ValidateField {
             return true;
         }
         return false;
+    }
+    
+    
+    public static boolean validarData(String data){
+        
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        sdf.setLenient(false);
+        
+        try{
+            Date dtValidade = sdf.parse(data);
+            
+            Date dtNow = new Date();
+            
+            if(dtValidade.equals(dtNow) || dtValidade.before(dtNow) ){
+                return false;
+            }
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Data não é valida: "+e);
+            
+            return false;
+        }
     }
        
    
