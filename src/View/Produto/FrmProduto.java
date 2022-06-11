@@ -328,7 +328,7 @@ public class FrmProduto extends javax.swing.JFrame {
                     
                     jTabbedPane1.setSelectedIndex(1);
                     
-                    //populateTable();
+                    populateTable();
                     
                 }else{
                     
