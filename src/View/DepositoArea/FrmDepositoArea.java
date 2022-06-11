@@ -285,6 +285,8 @@ public class FrmDepositoArea extends javax.swing.JFrame {
                 
                 if(sucesso){
                     JOptionPane.showMessageDialog(null, "Sucesso ao criar área de depósito", "SUCESSO", 1);
+                
+                    populateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Erro ao criar área de depósito", "ERRO", 2);
                 }
@@ -333,6 +335,8 @@ public class FrmDepositoArea extends javax.swing.JFrame {
         
         if(sucesso){
             JOptionPane.showMessageDialog(null, "Sucesso ao inativar área de depósito", "SUCESSO", 2);
+            
+            populateTable();
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inativar área de depósito", "ERRO", 2);
         }

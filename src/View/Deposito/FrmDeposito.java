@@ -273,6 +273,8 @@ public class FrmDeposito extends javax.swing.JFrame {
                 
                 if(sucesso){
                     JOptionPane.showMessageDialog(null, "Sucesso ao criar depósito", "SUCESSO", 1);
+                    
+                    populateTable();
                 }else{
                     JOptionPane.showMessageDialog(null, "Erro ao criar depósito", "ERRO", 2);
                 }
@@ -324,6 +326,8 @@ public class FrmDeposito extends javax.swing.JFrame {
         
         if(sucesso){
             JOptionPane.showMessageDialog(null, "Sucesso ao inativar depósito", "SUCESSO", 2);
+            
+            populateTable();
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao inativar depósito", "ERRO", 2);
         }

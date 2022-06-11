@@ -312,6 +312,7 @@ public class FrmProduto extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Sucesso ao criar produto", "SUCESSO", 1);
                     
                     populateTable();
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Erro ao criar produto", "ERRO", 2);
                 }

@@ -18,7 +18,26 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
 
     @Override
     public boolean create(DepositoAreaModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "insert into projeto_integrador_vi.deposito_area values (default, "
+                    + "'"+objeto.getDescricao()+"', "
+                    + objeto.getDeposito().getId() + ", "
+                    + objeto.getLimiteKg()+", default);";
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+            
+        }
+        catch(Exception e){
+            System.out.println("Erro ao inserir registro: "+e);
+            return false;
+        }
     }
 
     @Override
@@ -93,12 +112,47 @@ public class DepositoAreaDAO implements IDAO<DepositoAreaModel>{
 
     @Override
     public boolean update(DepositoAreaModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.deposito_area set "
+                    + "descricao = '" + objeto.getDescricao()+"'"
+                    + ", deposito_id = " + objeto.getDeposito().getId()
+                    + ", limite_kg = " + objeto.getLimiteKg()
+                    + " where id = " + objeto.getId();
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Erro ao editar registro:"+e);
+            
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.deposito_area set ativo = 'N' where id = "+id;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao inativar registro: " + e);
+            
+            return false;
+        }    
     }
 
     @Override

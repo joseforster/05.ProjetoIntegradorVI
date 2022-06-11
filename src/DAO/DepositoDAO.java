@@ -18,7 +18,25 @@ public class DepositoDAO implements IDAO<DepositoModel> {
 
     @Override
     public boolean create(DepositoModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "insert into projeto_integrador_vi.deposito values (default, "
+                    + "'"+objeto.getDescricao()+"', "
+                    + "'"+objeto.getEndereco()+"', default);";
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+            
+        }
+        catch(Exception e){
+            System.out.println("Erro ao inserir registro: "+e);
+            return false;
+        }
     }
 
     @Override
@@ -85,12 +103,46 @@ public class DepositoDAO implements IDAO<DepositoModel> {
 
     @Override
     public boolean update(DepositoModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.deposito set "
+                    + "descricao = '" + objeto.getDescricao()+"'"
+                    + ", endereco = '" + objeto.getEndereco()+"'"
+                    + " where id = " + objeto.getId();
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Erro ao editar registro:"+e);
+            
+            return false;
+        }
     }
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.deposito set ativo = 'N' where id = "+id;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao inativar registro: " + e);
+            
+            return false;
+        }    
     }
 
     @Override
