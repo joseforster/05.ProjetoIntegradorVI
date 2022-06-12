@@ -6,6 +6,7 @@ package View.Venda;
 
 
 import DAO.ClienteDAO;
+import DAO.DepositoAreaDAO;
 import DAO.ProdutoDAO;
 import DAO.VendaDAO;
 import Model.ClienteModel;
@@ -16,6 +17,7 @@ import java.awt.Color;
 import Util.FormatField;
 import Util.ValidateField;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,7 +48,7 @@ public class FrmVenda extends javax.swing.JFrame {
         
     }
     
-        private void populateTable(){
+    private void populateTable(){
         
         String[][] data = new VendaDAO().read(null);
         
@@ -56,6 +58,16 @@ public class FrmVenda extends javax.swing.JFrame {
         
         jTable1.setModel(tableModel);
     }
+    
+    private void populateComboBoxArea(int idProduto){
+        
+        
+        for(var area : new DepositoAreaDAO().readComboBoxByProduto(idProduto)){
+            comboBoxArea.addItem(area);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -74,8 +86,10 @@ public class FrmVenda extends javax.swing.JFrame {
         comboBoxClientes = new javax.swing.JComboBox<>();
         fieldQuantidade = new javax.swing.JSpinner();
         jButton2 = new javax.swing.JButton();
+        comboBoxArea = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         listProdutos = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -106,6 +120,12 @@ public class FrmVenda extends javax.swing.JFrame {
         });
 
         fieldQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        fieldQuantidade.setEnabled(false);
+        fieldQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                fieldQuantidadeFocusGained(evt);
+            }
+        });
 
         jButton2.setText("Adicionar Produto");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,12 +134,36 @@ public class FrmVenda extends javax.swing.JFrame {
             }
         });
 
+        comboBoxArea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                comboBoxAreaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                comboBoxAreaFocusLost(evt);
+            }
+        });
+        comboBoxArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboBoxAreaMouseClicked(evt);
+            }
+        });
+
         listProdutos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                listProdutosFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 listProdutosFocusLost(evt);
             }
         });
+        listProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(listProdutos);
+
+        jLabel1.setText("Area ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,11 +182,14 @@ public class FrmVenda extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxArea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,7 +204,9 @@ public class FrmVenda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboBoxArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
@@ -298,6 +347,7 @@ public class FrmVenda extends javax.swing.JFrame {
     private void listProdutosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listProdutosFocusLost
         listProdutos.setSelectionBackground(Color.blue);
         listProdutos.setSelectionForeground(Color.white);
+        
     }//GEN-LAST:event_listProdutosFocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -393,6 +443,43 @@ public class FrmVenda extends javax.swing.JFrame {
         //
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void comboBoxAreaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxAreaFocusGained
+        //
+    }//GEN-LAST:event_comboBoxAreaFocusGained
+
+    private void fieldQuantidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusGained
+        //
+    }//GEN-LAST:event_fieldQuantidadeFocusGained
+
+    private void comboBoxAreaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxAreaFocusLost
+            
+        fieldQuantidade.setModel(new SpinnerNumberModel(
+                1.00, 
+                1.00, 
+                Double.parseDouble(comboBoxArea.getSelectedItem().toString().split(" - ")[2].replace(" Kg", "")), 
+                1));
+            
+            
+    }//GEN-LAST:event_comboBoxAreaFocusLost
+
+    private void listProdutosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listProdutosFocusGained
+        //
+    }//GEN-LAST:event_listProdutosFocusGained
+
+    private void listProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProdutosMouseClicked
+        comboBoxArea.removeAllItems();
+        
+        int idProduto = Integer.parseInt(listProdutos.getSelectedValue().split(" - ")[0]);
+        
+        populateComboBoxArea(idProduto);
+        
+        fieldQuantidade.setEnabled(false);
+    }//GEN-LAST:event_listProdutosMouseClicked
+
+    private void comboBoxAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxAreaMouseClicked
+        //
+    }//GEN-LAST:event_comboBoxAreaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -436,6 +523,7 @@ public class FrmVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboBoxArea;
     private javax.swing.JComboBox<String> comboBoxClientes;
     private javax.swing.JSpinner fieldQuantidade;
     private javax.swing.JButton jButton1;
@@ -443,6 +531,7 @@ public class FrmVenda extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
