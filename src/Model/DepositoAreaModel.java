@@ -13,6 +13,8 @@ public class DepositoAreaModel {
     private String descricao;
     private DepositoModel deposito;
     private double limiteKg;
+    
+    
 
     public DepositoAreaModel(int id, String descricao, DepositoModel deposito, double limiteKg) {
         this.id = id;

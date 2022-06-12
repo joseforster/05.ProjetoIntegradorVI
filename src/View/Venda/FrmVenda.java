@@ -10,12 +10,14 @@ import DAO.DepositoAreaDAO;
 import DAO.ProdutoDAO;
 import DAO.VendaDAO;
 import Model.ClienteModel;
+import Model.DepositoAreaModel;
 import Model.ProdutoModel;
 import Model.VendaModel;
 import Model.VendaProdutoModel;
 import java.awt.Color;
 import Util.FormatField;
 import Util.ValidateField;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
@@ -120,10 +122,17 @@ public class FrmVenda extends javax.swing.JFrame {
         });
 
         fieldQuantidade.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        fieldQuantidade.setEnabled(false);
         fieldQuantidade.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 fieldQuantidadeFocusGained(evt);
+            }
+        });
+        fieldQuantidade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fieldQuantidadeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                fieldQuantidadeMouseEntered(evt);
             }
         });
 
@@ -145,6 +154,9 @@ public class FrmVenda extends javax.swing.JFrame {
         comboBoxArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 comboBoxAreaMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                comboBoxAreaMouseExited(evt);
             }
         });
 
@@ -345,6 +357,7 @@ public class FrmVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxClientesFocusLost
 
     private void listProdutosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listProdutosFocusLost
+        
         listProdutos.setSelectionBackground(Color.blue);
         listProdutos.setSelectionForeground(Color.white);
         
@@ -352,43 +365,66 @@ public class FrmVenda extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        if(vendaModel.getCliente()== null){
-            int idCliente = Integer.parseInt(
-                    comboBoxClientes.getSelectedItem().toString().split(" - ")[0]
+        double quantidadeEstoque = Double.parseDouble(comboBoxArea.getSelectedItem().toString().split(" - ")[2].replace(" Kg", ""));
+        double quantidadePedido = Double.parseDouble(fieldQuantidade.getValue().toString());
+        
+        if(quantidadePedido > quantidadeEstoque){
+            JOptionPane.showMessageDialog(null, "Quantidade inválida.", "ERRO", 2);
+            
+        }else{
+
+            if(vendaModel.getCliente()== null){
+                
+                int idCliente = Integer.parseInt(
+                        comboBoxClientes.getSelectedItem().toString().split(" - ")[0]
+                );
+
+                String nomeCliente = comboBoxClientes.getSelectedItem().toString().split(" - ")[1];
+
+                ClienteModel fornecedorModel = new ClienteModel(idCliente, nomeCliente);
+
+                vendaModel.setCliente(fornecedorModel);
+
+            }
+
+            int idProduto = Integer.parseInt(listProdutos.getSelectedValue().split(" - ")[0]);
+            
+            String descricaoProduto = listProdutos.getSelectedValue().split(" - ")[1];
+
+            ProdutoModel produtoModel = new ProdutoModel(idProduto, descricaoProduto);
+            
+            DepositoAreaModel depositoAreaModel = new DepositoAreaModel(
+                    Integer.parseInt(comboBoxArea.getSelectedItem().toString().split(" - ")[0]),
+                    comboBoxArea.getSelectedItem().toString().split(" - ")[1]
+            );
+
+            VendaProdutoModel vendaProdutoModel = new VendaProdutoModel(
+                    vendaModel, 
+                    produtoModel, 
+                    Double.parseDouble(fieldQuantidade.getValue().toString()), 
+                    Double.parseDouble(
+                        listProdutos.getSelectedValue().split(" - ")[2].replace("Valor Venda: R$ ", "")
+                    ),
+                    depositoAreaModel
             );
             
-            String nomeCliente = comboBoxClientes.getSelectedItem().toString().split(" - ")[1];
+            double produtoDetalhesQuantidade = Double.parseDouble(comboBoxArea.getSelectedItem().toString().split(" - ")[2].replace(" Kg", ""));
+            Date produtoDetalhesValidade = FormatField.returnDate(comboBoxArea.getSelectedItem().toString().split(" - ")[3].replace("Validade: ", ""));
+
+            vendaProdutoModel.setProdutoDetalhesQuantidade(produtoDetalhesQuantidade);
+            vendaProdutoModel.setProdutoDetalhesValidade(produtoDetalhesValidade);
             
-            ClienteModel fornecedorModel = new ClienteModel(idCliente, nomeCliente);
-            
-            vendaModel.setCliente(fornecedorModel);
-            
-        }
-        
-        int idProduto = Integer.parseInt(listProdutos.getSelectedValue().split(" - ")[0]);
-        String descricaoProduto = listProdutos.getSelectedValue().split(" - ")[1];
-        
-        ProdutoModel produtoModel = new ProdutoModel(idProduto, descricaoProduto);
-        
-        VendaProdutoModel vendaProdutoModel = new VendaProdutoModel(
-                vendaModel, 
-                produtoModel, 
-                Double.parseDouble(fieldQuantidade.getValue().toString()), 
-                Double.parseDouble(
-                        listProdutos.getSelectedValue().split(" - ")[2].replace("Valor Venda: R$ ", "")
-                )
-        );
-        
-        this.vendaModel.getVendaProdutos().add(vendaProdutoModel);
-        
-        JOptionPane.showMessageDialog(
-                null, 
-                "Item adicionado.\nValor Total: R$ "+vendaProdutoModel.getValorTotal(), 
-                "SUCESSO", 
-                1);
-        
-        if(!jButton6.isEnabled()){
-            jButton6.setEnabled(true);
+            this.vendaModel.getVendaProdutos().add(vendaProdutoModel);
+
+            JOptionPane.showMessageDialog(
+                    null, 
+                    "Item adicionado.\nValor Total: R$ "+vendaProdutoModel.getValorTotal(), 
+                    "SUCESSO", 
+                    1);
+
+            if(!jButton6.isEnabled()){
+                jButton6.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -416,6 +452,9 @@ public class FrmVenda extends javax.swing.JFrame {
         
         if(sucesso){
             JOptionPane.showMessageDialog(null, "Sucesso ao cancelar venda", "SUCESSO", 2);
+            
+            populateTable();
+            
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao cancelar venda", "ERRO", 2);
         }
@@ -448,18 +487,14 @@ public class FrmVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxAreaFocusGained
 
     private void fieldQuantidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldQuantidadeFocusGained
-        //
+        
     }//GEN-LAST:event_fieldQuantidadeFocusGained
 
     private void comboBoxAreaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxAreaFocusLost
             
-        fieldQuantidade.setModel(new SpinnerNumberModel(
-                1.00, 
-                1.00, 
-                Double.parseDouble(comboBoxArea.getSelectedItem().toString().split(" - ")[2].replace(" Kg", "")), 
-                1));
+        
             
-            
+        
     }//GEN-LAST:event_comboBoxAreaFocusLost
 
     private void listProdutosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_listProdutosFocusGained
@@ -473,12 +508,26 @@ public class FrmVenda extends javax.swing.JFrame {
         
         populateComboBoxArea(idProduto);
         
-        fieldQuantidade.setEnabled(false);
+       
     }//GEN-LAST:event_listProdutosMouseClicked
 
     private void comboBoxAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxAreaMouseClicked
-        //
+        
     }//GEN-LAST:event_comboBoxAreaMouseClicked
+
+    private void fieldQuantidadeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldQuantidadeMouseEntered
+        //
+    }//GEN-LAST:event_fieldQuantidadeMouseEntered
+
+    private void fieldQuantidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldQuantidadeMouseClicked
+        
+        
+        
+    }//GEN-LAST:event_fieldQuantidadeMouseClicked
+
+    private void comboBoxAreaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxAreaMouseExited
+
+    }//GEN-LAST:event_comboBoxAreaMouseExited
 
     /**
      * @param args the command line arguments

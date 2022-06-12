@@ -18,7 +18,62 @@ public class VendaDAO implements IDAO<VendaModel>{
 
     @Override
     public boolean create(VendaModel objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "insert into projeto_integrador_vi.venda values (default, default,"
+                    + objeto.getCliente().getId()+ ", default) returning venda.id";
+            
+            System.out.println(sql);
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            int idVenda = 0;
+            
+            while(rs.next()){
+                idVenda = Integer.parseInt(rs.getString(1));
+            }
+            
+            for(var produto : objeto.getVendaProdutos()){
+                
+                sql = "insert into projeto_integrador_vi.venda_produto values (default, "+
+                      idVenda+", "+
+                      produto.getProduto().getId()+","+
+                      produto.getQuantidade()+","+
+                      produto.getValorUnitario()+","+
+                      produto.getValorTotal()
+                      +");";
+                
+                System.out.println(sql);
+                        
+                st.executeUpdate(sql);
+                
+                sql = "update projeto_integrador_vi.produto_detalhes set quantidade_kg = quantidade_kg - "
+                        + produto.getQuantidade() + 
+                        " where area_id = " + produto.getDepositoArea().getId() + 
+                        " and produto_id = " + produto.getProduto().getId() + 
+                        " and quantidade_kg = " + produto.getProdutoDetalhesQuantidade() + 
+                        " and validade = cast('" + produto.getProdutoDetalhesValidade()+"' as date)";
+                
+                System.out.println(sql);
+                        
+                st.executeUpdate(sql);
+                
+                sql = "delete from projeto_integrador_vi.produto_detalhes where quantidade_kg = 0.00;";
+                
+                System.out.println(sql);
+                        
+                st.executeUpdate(sql);
+            }
+            
+            return true;
+                    
+                    
+        }catch(Exception e){
+            System.out.println("Erro ao criar registro: " + e);
+            
+            return false;
+        }
     }
 
     @Override
@@ -85,7 +140,23 @@ public class VendaDAO implements IDAO<VendaModel>{
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "update projeto_integrador_vi.venda set cancelado = 'S' where id = "+id;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao inativar registro: " + e);
+            
+            return false;
+        }    
     }
 
     @Override
@@ -144,6 +215,8 @@ public class VendaDAO implements IDAO<VendaModel>{
             System.out.println("Erro ao buscar todos os registros: "+e);
             return new String[0][0];
         }
-    } 
+    }
+    
+    
     
 }
