@@ -8,6 +8,8 @@ import DAO.DepositoAreaDAO;
 import DAO.EstoqueDAO;
 import View.*;
 import DAO.ProdutoDAO;
+import Util.FormatField;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
@@ -212,14 +214,19 @@ public class FrmMovimentarEstoque extends javax.swing.JFrame {
         
         int idAreaOrigem = Integer.parseInt(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[0]);
         
+        double produtoDetalhesQuantidade = Double.parseDouble(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[2].replace(" Kg", ""));
+            
+        Date produtoDetalhesValidade = FormatField.returnDate(comboBoxAreaOrigem.getSelectedItem().toString().split(" - ")[3].replace("Validade: ", ""));
+
         int idAreaDestino = Integer.parseInt(comboBoxAreaDestino.getSelectedItem().toString().split(" - ")[0]);
         
         double quantidade = Double.parseDouble(fieldQuantidade.getValue().toString());
         
-        boolean sucesso = new EstoqueDAO().movimentarEstoque(idProduto, idAreaOrigem, idAreaDestino, quantidade);
+        boolean sucesso = new EstoqueDAO().movimentarEstoque(idProduto, idAreaOrigem,produtoDetalhesQuantidade, produtoDetalhesValidade, idAreaDestino, quantidade);
         
         if(sucesso){
             JOptionPane.showMessageDialog(null, "Sucesso ao realizar operação.", "SUCESSO", 1);
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao realizar operação.", "ERRO", 1);
         }

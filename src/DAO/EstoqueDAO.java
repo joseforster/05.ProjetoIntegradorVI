@@ -7,6 +7,7 @@ package DAO;
 import Util.ConexaoBD;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
@@ -88,16 +89,19 @@ public class EstoqueDAO {
             
             if(filtro.isBlank() || filtro.isEmpty()){
                 sqlCount = "select count(distinct deposito_area.id) as qtde " +
-                            "from projeto_integrador_vi.produto_detalhes " +
-                            "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
-                            "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id ";
+                            "from projeto_integrador_vi.deposito_area " +
+                            "left join projeto_integrador_vi.produto_detalhes ON deposito_area.id = produto_detalhes.area_id " +
+                            "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id "
+                        + " where deposito_area.ativo = 'S' ";
             }else{
                 sqlCount = "select count(distinct deposito_area.id) as qtde " +
-                            "from projeto_integrador_vi.produto_detalhes " +
-                            "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+                            "from projeto_integrador_vi.deposito_area " +
+                            "left join projeto_integrador_vi.produto_detalhes ON deposito_area.id = produto_detalhes.area_id " +
                             "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                            "where deposito_area.descricao ilike '%"+filtro+"%' ";
+                            "where deposito_area.descricao ilike '%"+filtro+"%' and deposito_area.ativo = 'S'";
             }
+            
+            System.out.println(sqlCount);
             
             
             ResultSet rsCount = st.executeQuery(sqlCount);
@@ -111,22 +115,27 @@ public class EstoqueDAO {
             String sql;
             
             if(filtro.isBlank() || filtro.isEmpty()){
-                sql = "select deposito.descricao as deposito,  deposito_area.descricao as area, sum(quantidade_kg) as atual, limite_kg, " +
-                        "cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(4,1)) as utilizado " +
-                        "from projeto_integrador_vi.produto_detalhes " +
-                        "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+                sql = "select deposito.descricao as deposito,  deposito_area.descricao as area, coalesce(sum(quantidade_kg),0) as atual, limite_kg, " +
+                        "coalesce(cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(4,1)),0) as utilizado " +
+                        "from projeto_integrador_vi.deposito_area " +
+                        "left join projeto_integrador_vi.produto_detalhes ON deposito_area.id = produto_detalhes.area_id " +
                         "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                        "group by deposito.descricao,deposito_area.descricao, limite_kg order by 4 desc";
+                        " where deposito_area.ativo = 'S' " +
+                        "group by deposito.descricao,deposito_area.descricao, limite_kg "
+                        + " order by 2";
             }else{
-                sql = "select deposito.descricao as deposito,  deposito_area.descricao as area, sum(quantidade_kg) as atual, limite_kg, " +
-                        "cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(4,1)) as utilizado " +
-                        "from projeto_integrador_vi.produto_detalhes " +
-                        "inner join projeto_integrador_vi.deposito_area ON deposito_area.id = produto_detalhes.area_id " +
+                sql = "select deposito.descricao as deposito,  deposito_area.descricao as area, coalesce(sum(quantidade_kg),0) as atual, limite_kg, " +
+                        "coalesce(cast((sum(quantidade_kg)/limite_kg) * 100 as numeric(4,1)),0) as utilizado " +
+                        "from projeto_integrador_vi.deposito_area " +
+                        "left join projeto_integrador_vi.produto_detalhes ON deposito_area.id = produto_detalhes.area_id " +
                         "inner join projeto_integrador_vi.deposito ON deposito.id = deposito_area.deposito_id " +
-                        "where deposito_area.descricao ilike '%"+filtro+"%' " +
-                        "group by deposito.descricao,deposito_area.descricao, limite_kg order by 4 desc";
+                        "where deposito_area.descricao ilike '%"+filtro+"%' and deposito_area.ativo = 'S' " +
+                        "group by deposito.descricao,deposito_area.descricao, limite_kg "
+                        + "order by 2";
                         
             }
+            
+            System.out.println(sql);
             
             ResultSet rsSelect = st.executeQuery(sql);
             
@@ -252,7 +261,57 @@ public class EstoqueDAO {
         }
     }
     
-    public boolean movimentarEstoque(int idProduto, int idAreaOrigem, int idAreaDestino, double quantidade){
-        throw new UnsupportedOperationException("To Do");
+    public boolean movimentarEstoque(int idProduto, int idAreaOrigem,double produtoDetalhesQuantidade, Date produtoDetalhesValidade, int idAreaDestino, double quantidade){
+        try{
+            
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "select id from projeto_integrador_vi.produto_detalhes where "
+                    + "produto_id = " + idProduto
+                    + " and area_id = " + idAreaOrigem
+                    + " and quantidade_kg = " + produtoDetalhesQuantidade
+                    + " and validade = cast('" + produtoDetalhesValidade+"' as date)";
+            
+            System.out.println(sql);
+            
+            ResultSet retornoQuery =  st.executeQuery(sql);
+            
+            int idProdutoDetalhes = 0;
+            
+            while(retornoQuery.next()){
+                idProdutoDetalhes = retornoQuery.getInt(1);
+            }
+            
+             sql = "insert into projeto_integrador_vi.produto_detalhes values (default, "
+                    + idProduto + ","
+                    + idAreaDestino + ","
+                    + quantidade + ", cast('" + produtoDetalhesValidade+"' as date)); ";
+             
+             System.out.println(sql);
+             
+             st.executeUpdate(sql);
+             
+             sql = "update projeto_integrador_vi.produto_detalhes "
+                     + "set quantidade_kg = quantidade_kg - " + quantidade
+                     + " where id = " + idProdutoDetalhes;
+             
+             System.out.println(sql);
+             
+             st.executeUpdate(sql);
+             
+             sql = "delete from projeto_integrador_vi.produto_detalhes where quantidade_kg = 0.00;";
+                
+             System.out.println(sql);
+                        
+             st.executeUpdate(sql);
+             
+             return true;
+                    
+        }catch(Exception e){
+            
+            System.out.println("Erro ao movimentar estoque: " + e);
+            
+            return false;
+        }
     }
 }
